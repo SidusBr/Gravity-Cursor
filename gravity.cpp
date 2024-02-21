@@ -20,11 +20,30 @@ void moveCursorWithGravity()
 				
 		// Update velocity
 		velocity.y += GRAVITY;
+		
+		DWORD dwWidth = GetSystemMetrics(SM_CXSCREEN);
+		DWORD dwHeight = GetSystemMetrics(SM_CYSCREEN);
+		
+		int maxX = dwWidth;
+		int maxY = dwHeight;
 
-		if (p.y >= 1024)
+		if (p.y >= maxY - 1)
 		{
-			velocity.y = 0;
-			velocity.x = 0;
+			if (velocity.y > 5){
+				velocity.y = 0 - (velocity.y * 0.7);
+			}
+			else {
+				velocity.y = 0;
+			}
+			if (velocity.x > 5){
+				velocity.x = velocity.x * 0.5;
+			}
+			else {
+				velocity.x = 0;
+			}
+		}
+		if (last_position.x != p.x && (p.x <= 0 || p.x >= maxX - 1)){
+			velocity.x = 0 - (velocity.x * 0.7);
 		}
 		
 		// Update cursor position with velocity
